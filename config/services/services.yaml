@@ -1,0 +1,145 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+#            $em: '@sfs_cms.entity_manager'
+#            $formFactory: '@form.factory'
+#            $enabledLocales: '%kernel.enabled_locales%'
+#            $defaultLocale: '%kernel.default_locale%'
+#            $container: '@service_container'
+#            $esi: '@?esi'
+#            $siteConfig: '%sfs_cms.site_config%'
+#            $profiler: '@?profiler'
+#            $entityTransformers: !tagged_iterator { tag: sfs_cms.data.entity_transformer, default_priority_method: getPriority }
+#            $fieldTransformers: !tagged_iterator { tag: sfs_cms.data.field_transformer, default_priority_method: getPriority }
+#            $cmsLogger: '@?monolog.logger.cms'
+#            $debug: '%kernel.debug%'
+#            $defaultRestrictPatterns: '%sfs_cms.form_type.symfony_route.default_restrict_patterns%'
+#            $contentSaveCompiled: '%sfs_cms.content.save_compiled%'
+#            $contentAutoCompileOnSave: '%sfs_cms.content.autocompile_on_save%'
+            $sectionSaveCompiled: '%sfs_cms_sections.section.save_compiled%'
+            $sectionAutoCompileOnSave: '%sfs_cms_sections.section.autocompile_on_save%'
+#            $prefixCompiled: '%sfs_cms.content.prefix_compiled%'
+#            $entityDuplicators: !tagged_iterator { tag: sfs_cms.content_entity_duplicator }
+#            $contentCacheType: '%sfs_cms.content.cache.type%'
+#            $menuCacheType: '%sfs_cms.menu.cache.type%'
+#            $blockCacheType: '%sfs_cms.block.cache.type%'
+#            $mediaStoragePath: '%sfs_media.storage.filesystem.path%'
+#            $compiledDataExpirationTtl: '%sfs_cms.compiled.expiration_ttl%'
+#            $contentRecompileEnabled: '%sfs_cms.content.recompile_enabled%'
+#            $sectionRecompileEnabled: '%sfs_cms_sections.section.recompile_enabled%'
+
+#    Softspring\CmsSectionsPlugin\Config\CmsConfig:
+#        arguments:
+#            $modules: '%sfs_cms.modules%'
+#            $layouts: '%sfs_cms.layouts%'
+#            $contents: '%sfs_cms.contents%'
+#            $menus: '%sfs_cms.menus%'
+#            $blocks: '%sfs_cms.blocks%'
+#            $sites: '%sfs_cms.sites%'
+#            $siteManager: '@Softspring\CmsSectionsPlugin\Manager\SiteManagerInterface'
+#
+#    Softspring\CmsSectionsPlugin\Command\:
+#        resource: '../../src/Command/*'
+#
+    Softspring\CmsSectionsPlugin\Controller\:
+        resource: '../../src/Controller/*'
+        tags: [ 'controller.service_arguments' ]
+#
+#    Softspring\CmsSectionsPlugin\DataFixtures\:
+#        resource: '../../src/DataFixtures/*'
+#        tags: [ 'doctrine.fixtures.loader' ]
+#
+#    Softspring\CmsSectionsPlugin\DataFixtures\Purger\CmsPurgerFactory:
+#        tags:
+#            - { name: 'doctrine.fixtures.purger_factory', alias: 'cms_purge' }
+#
+#    Softspring\CmsSectionsPlugin\Form\Admin\:
+#        resource: '../../src/Form/Admin/*'
+#        tags: [ 'form.type' ]
+#
+#    Softspring\CmsSectionsPlugin\Form\Module\:
+#        resource: '../../src/Form/Module/*'
+#        tags: [ 'form.type' ]
+#
+    Softspring\CmsSectionsPlugin\Form\Type\:
+        resource: '../../src/Form/Type/*'
+        tags: [ 'form.type' ]
+
+#    Softspring\CmsSectionsPlugin\Form\Extension\:
+#        resource: '../../src/Form/Extension/*'
+#        tags: [ 'form.extension' ]
+#
+#    Softspring\CmsSectionsPlugin\EventListener\SiteResolverListener: ~
+#
+#    Softspring\CmsSectionsPlugin\EventListener\ErrorPageListener: ~
+#
+#    Softspring\CmsSectionsPlugin\Data\:
+#        resource: '../../src/Data/*'
+
+    Softspring\CmsSectionsPlugin\Helper\:
+        resource: '../../src/Helper/*'
+
+    Softspring\CmsSectionsPlugin\Manager\:
+        resource: '../../src/Manager/*'
+
+#    Softspring\CmsSectionsPlugin\Routing\:
+#        resource: '../../src/Routing/*'
+#
+#    Softspring\CmsSectionsPlugin\Routing\CmsRouter:
+#        decorates: 'router.default'
+#        arguments: [ '@.inner' ]
+#        tags:
+#            - { name: container.service_subscriber, id: 'routing.loader' }
+#
+    Softspring\CmsSectionsPlugin\Compiler\:
+        resource: '../../src/Compiler/*'
+
+    Softspring\CmsSectionsPlugin\Render\:
+        resource: '../../src/Render/*'
+
+#    Softspring\CmsSectionsPlugin\Request\FlashNotifier: ~
+#
+#    sfs_cms.twig.extension.loader:
+#        class: Twig\Extension\StringLoaderExtension
+#        tags: [ 'twig.extension' ]
+#
+#    Softspring\CmsSectionsPlugin\Sitemap\SitemapFactory: ~
+#    Softspring\CmsSectionsPlugin\Sitemap\IndexFactory: ~
+#
+#    Softspring\CmsSectionsPlugin\Translator\TranslatableContext: ~
+
+#    Softspring\CmsSectionsPlugin\Twig\Extension\:
+#        resource: '../../src/Twig/Extension/*'
+#        tags: [ 'twig.extension' ]
+
+#    Softspring\CmsSectionsPlugin\EntityListener\ContentVersionCompileListener:
+#        tags:
+#            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'Softspring\CmsSectionsPlugin\Entity\ContentVersion',  priority: 11 } #, entity_manager: '%sfs_cms.entity_manager_name%' }
+
+    Softspring\CmsSectionsPlugin\Doctrine\EventListener\CompiledDataSectionRelationshipListener:
+        tags:
+            - { name: 'doctrine.event_listener', event: 'loadClassMetadata' }
+
+    Softspring\CmsSectionsPlugin\Doctrine\EventListener\ContentVersionSectionRelationshipListener:
+        tags:
+            - { name: 'doctrine.event_listener', event: 'loadClassMetadata' }
+
+#    Softspring\CmsSectionsPlugin\Doctrine\EventListener\OverrideDoctrineClassSuperclassListener:
+#        arguments:
+#            $superclassList: '%sfs_cms.convert_superclass_list%'
+#        tags:
+#            - { name: 'doctrine.event_listener', event: 'loadClassMetadata', priority: 500 }
+#
+#    Softspring\CmsSectionsPlugin\Security\Voter\:
+#        resource: '../../src/Security/Voter/*'
+#        tags: [ 'security.voter' ]
+#
+#    Softspring\CmsSectionsPlugin\Security\Voter\DeprecatedPermissionVoter:
+#        tags:
+#            - { name: security.voter, priority: 1000 }
+#
+    Softspring\CmsSectionsPlugin\Form\Resolver\PluginTypeResolver:
+        tags: [ { name: 'softspring.dynamic_form_type.type_resolver', priority: 15 } ]

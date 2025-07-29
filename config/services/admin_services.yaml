@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $sectionRecompileEnabled: '%sfs_cms_sections.section.recompile_enabled%'
+
+    Softspring\CmsSectionsPlugin\Admin\Menu\SectionMenuProvider:
+        tags: [ 'sfs_cms.admin_menu.menu_provider' ]
+
+    Softspring\CmsSectionsPlugin\Twig\Extension\Admin\:
+        resource: '../../src/Twig/Extension/Admin/*'
+        tags: [ 'twig.extension' ]

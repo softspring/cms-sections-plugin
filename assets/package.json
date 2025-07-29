@@ -1,0 +1,14 @@
+{
+    "name": "@softspring/cms-sections-plugin",
+    "license": "MIT",
+    "version": "5.4.0-dev",
+    "peerDependencies": {
+        "@softspring/cms-bundle": "*"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.11.1",
+        "eslint": "^8.57.1",
+        "globals": "^15.9.0",
+        "@softspring/cms-bundle": "file:./../vendor/softspring/cms-bundle/assets"
+    }
+}
