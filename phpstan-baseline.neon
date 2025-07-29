@@ -1,0 +1,5 @@
+parameters:
+    excludePaths:
+        # until symfony min version is increased to 6.4
+        - src/Request/ValueResolver/SectionValueResolver.php
+        - src/Request/ValueResolver/SectionVersionValueResolver.php
