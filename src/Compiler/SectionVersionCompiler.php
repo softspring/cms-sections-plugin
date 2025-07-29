@@ -10,7 +10,6 @@ use Softspring\CmsBundle\Helper\CmsHelper;
 use Softspring\CmsBundle\Manager\CompiledDataManagerInterface;
 use Softspring\CmsBundle\Model\CompiledDataInterface;
 use Softspring\CmsBundle\Model\VersionInterface;
-use Softspring\CmsBundle\Render\Error\RenderErrorException;
 use Softspring\CmsBundle\Render\Error\RenderErrorList;
 use Softspring\CmsBundle\Render\Exception\RenderException;
 use Softspring\CmsBundle\Render\Isolated\IsolatedRequest;
