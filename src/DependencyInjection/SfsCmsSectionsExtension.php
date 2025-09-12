@@ -84,10 +84,11 @@ class SfsCmsSectionsExtension extends Extension implements PrependExtensionInter
 
         $container->prependExtensionConfig('sfs_cms', $cmsConfig);
 
+        $doctrineConfig = $container->getExtensionConfig('doctrine_migrations');
         $container->prependExtensionConfig('doctrine_migrations', [
-            'migrations_paths' => [
-                'Softspring\SfsCmsSectionsPlugin\Migrations' => '@SfsCmsSectionsPlugin/src/Migrations',
-            ],
+            'migrations_paths' => array_merge(array_pop($doctrineConfig)['migrations_paths'] ?? [], [
+                'Softspring\CmsSectionsPlugin\Migrations' => '@SfsCmsSectionsPlugin/src/Migrations',
+            ]),
         ]);
     }
 }
