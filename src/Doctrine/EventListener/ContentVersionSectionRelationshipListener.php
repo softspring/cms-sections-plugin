@@ -28,7 +28,7 @@ class ContentVersionSectionRelationshipListener
         $metadata->mapManyToMany([
             'fieldName' => 'sections',
             'targetEntity' => $sectionMetadata->getName(),
-            'fetch' => 'EXTRA_LAZY',
+            'fetch' => ClassMetadata::FETCH_EXTRA_LAZY,
             'joinTable' => [
                 'name' => 'cms_content_version_sections',
                 'joinColumns' => [
