@@ -34,7 +34,7 @@ function showSectionPreview(inputElement, module, preview/*, form, event*/) {
  * The select option must have the "data-section-preview-input"
  * Both data attributes must have the same value (as identificator)
  */
-function showSectionNote(inputElement, module, preview, form, event) {
+function showSectionNote(inputElement, module, preview, form/*, event*/) {
     let htmlTargetElements = form.querySelectorAll("[data-section-note-preview='" + inputElement.id + "']");
     let sectionNote = inputElement.options[inputElement.selectedIndex].dataset.sectionNotes;
 
