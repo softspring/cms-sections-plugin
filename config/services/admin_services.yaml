@@ -9,6 +9,6 @@ services:
     Softspring\CmsSectionsPlugin\Admin\Menu\SectionMenuProvider:
         tags: [ 'sfs_cms.admin_menu.menu_provider' ]
 
-    Softspring\CmsSectionsPlugin\Twig\Extension\Admin\:
-        resource: '../../src/Twig/Extension/Admin/*'
+    Softspring\CmsSectionsPlugin\Twig\Extension\:
+        resource: '../../src/Twig/Extension/*'
         tags: [ 'twig.extension' ]
