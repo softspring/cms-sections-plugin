@@ -77,6 +77,7 @@ class SectionType extends AbstractType
                     }
 
                     $attr['data-section-preview'] = '';
+                    $attr['data-section-notes'] = nl2br($section->getNotes());
 
                     foreach ($this->cmsConfig->getSites() as $site) {
                         foreach ($this->localeHelper->getEnabledLocales() as $locale) {
@@ -95,11 +96,13 @@ class SectionType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['section_preview'] = '';
+        $view->vars['section_notes'] = '';
 
         /** @var ChoiceView $choice */
         foreach ($view->vars['choices'] as $choice) {
             if ($view->vars['value'] == $choice->value) {
                 $view->vars['section_preview'] = $choice->attr['data-section-preview'];
+                $view->vars['section_notes'] = $choice->attr['data-section-notes'];
             }
         }
     }

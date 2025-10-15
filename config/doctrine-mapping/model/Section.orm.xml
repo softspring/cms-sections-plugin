@@ -22,6 +22,8 @@
                 <option name="unsigned">true</option>
             </options>
         </field>
+
+        <field name="notes" column="notes" type="text" nullable="true"/>
     </mapped-superclass>
 
 </doctrine-mapping>

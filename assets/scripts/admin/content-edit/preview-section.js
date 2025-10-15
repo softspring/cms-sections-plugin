@@ -10,6 +10,7 @@ registerFeature('admin_content_edit_preview_section', _init);
  */
 function _init() {
     cmsEditListener('[data-section-preview-input]', 'change', showSectionPreview);
+    cmsEditListener('[data-section-widget]', 'change', showSectionNote);
 }
 
 /**
@@ -24,4 +25,26 @@ function showSectionPreview(inputElement, module, preview/*, form, event*/) {
     let sectionPreview = inputElement.options[inputElement.selectedIndex].dataset.sectionPreview;
     [...htmlTargetElements].forEach((htmlTargetElement) => htmlTargetElement.innerHTML = sectionPreview === undefined ? '' : sectionPreview);
     filterCurrentFilterElements();
+}
+
+/**
+ * Shows a section preview
+ *
+ * The preview target element must have the "data-section-preview-target" attribute
+ * The select option must have the "data-section-preview-input"
+ * Both data attributes must have the same value (as identificator)
+ */
+function showSectionNote(inputElement, module, preview, form, event) {
+    let htmlTargetElements = form.querySelectorAll("[data-section-note-preview='" + inputElement.id + "']");
+    let sectionNote = inputElement.options[inputElement.selectedIndex].dataset.sectionNotes;
+
+    [...htmlTargetElements].forEach((htmlTargetElement) => {
+        if (sectionNote) {
+            htmlTargetElement.innerHTML = sectionNote;
+            htmlTargetElement.classList.remove('d-none');
+        } else {
+            htmlTargetElement.innerHTML = '';
+            htmlTargetElement.classList.add('d-none');
+        }
+    });
 }

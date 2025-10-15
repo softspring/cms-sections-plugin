@@ -21,6 +21,8 @@ abstract class Section implements SectionInterface
 
     protected ?array $extraData = null;
 
+    protected ?string $notes = null;
+
     public function __construct()
     {
         $this->versions = new ArrayCollection();
@@ -57,5 +59,15 @@ abstract class Section implements SectionInterface
             $this->extraData = [];
         }
         $this->extraData[$key] = $value;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes): void
+    {
+        $this->notes = $notes;
     }
 }

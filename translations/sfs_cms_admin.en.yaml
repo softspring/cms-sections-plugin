@@ -18,6 +18,9 @@ admin_sections:
         ttl.label: "Cache time"
         defaultLocale.label: "Default language"
         locales.label: "Languages"
+        notes:
+            label: "Integration notes"
+            help: "This note is only for internal use, will be displayed when integrating sections in contents. (can contain HTML)"
 
     version_form:
         note.label: "Note"
