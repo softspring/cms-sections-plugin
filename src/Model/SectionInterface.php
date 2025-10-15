@@ -30,4 +30,8 @@ interface SectionInterface extends VersionableInterface, TranslatableConfigInter
     public function getExtra(string $key, mixed $default = null): mixed;
 
     public function setExtra(string $key, mixed $value): void;
+
+    public function getNotes(): ?string;
+
+    public function setNotes(?string $notes): void;
 }

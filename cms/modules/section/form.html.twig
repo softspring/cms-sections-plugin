@@ -7,9 +7,16 @@
 </div>
 {{ sfs_cms_admin_module_accordion_block_end() }}
 
+{% import '@SfsCms/macros/modules_edit.html.twig' as edit %}
+
 {{ sfs_cms_admin_module_accordion_block_start(form, accordion, 'section', true) }}
 <div class="col-12" data-section-message-container>
     {{ form_row(form.section, {'attr': attr | merge({'data-section-message-select': ''})}) }}
+
+    <div class="alert alert-info mt-3" data-section-note-preview="{{ form.section.vars.id }}">
+        {{ form.section.vars.section_notes|raw }}
+    </div>
+
     {{ form_row(form.mode, {'attr': attr | merge({'data-section-mode-message-select': ''})}) }}
 
     <div class="alert alert-danger mt-3 d-none" role="alert" data-section-message-when data-section-when-section-draft
