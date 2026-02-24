@@ -79,11 +79,11 @@ class SectionController extends AbstractController
 
                 if ($request->attributes->has('_locale')) {
                     $request->setLocale($request->attributes->get('_locale'));
-                } else if ($request->query->has('_locale')) {
+                } elseif ($request->query->has('_locale')) {
                     $request->attributes->set('_locale', $request->query->get('_locale'));
                     $request->setLocale($request->attributes->get('_locale'));
                 }
-//                $this->localeSwitcher->setLocale($request->getLocale());
+                //                $this->localeSwitcher->setLocale($request->getLocale());
 
                 if (!$publishedVersion) {
                     $publishedVersion = $section->getLastVersion();

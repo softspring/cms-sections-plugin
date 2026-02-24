@@ -92,8 +92,8 @@ class PreviewListener extends AbstractSectionVersionListener
 
         if (!$compiledData->hasErrors()) {
             return new Response($compiledData->getDataPart('content'));
-        } else {
-            return new Response($compiledData->getDataPart('content') ?? '', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        return new Response($compiledData->getDataPart('content') ?? '', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
