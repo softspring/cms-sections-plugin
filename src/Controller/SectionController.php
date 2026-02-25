@@ -12,7 +12,6 @@ use Softspring\CmsSectionsPlugin\Model\SectionVersionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
 class SectionController extends AbstractController
@@ -22,7 +21,6 @@ class SectionController extends AbstractController
         protected SectionVersionManagerInterface $sectionVersionManager,
         protected Environment $twig,
         protected CmsConfig $cmsConfig,
-        protected LocaleSwitcher $localeSwitcher,
         protected ?LoggerInterface $cmsLogger,
     ) {
     }
@@ -83,7 +81,6 @@ class SectionController extends AbstractController
                     $request->attributes->set('_locale', $request->query->get('_locale'));
                     $request->setLocale($request->attributes->get('_locale'));
                 }
-                //                $this->localeSwitcher->setLocale($request->getLocale());
 
                 if (!$publishedVersion) {
                     $publishedVersion = $section->getLastVersion();
