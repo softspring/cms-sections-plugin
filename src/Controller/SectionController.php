@@ -43,6 +43,10 @@ class SectionController extends AbstractController
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS');
 
+        if ($request->query->has('admin_preview') && $request->query->get('admin_preview')) {
+            $adminPreview = true;
+        }
+
         try {
             /** @var ?SectionInterface $section */
             $section = $this->sectionManager->getRepository()->findOneById($section);
@@ -61,10 +65,19 @@ class SectionController extends AbstractController
             $publishedVersion = $section->getPublishedVersion();
 
             if ($adminPreview) {
-                if (!$request->attributes->has('_sfs_cms_site') && $request->query->has('_sfs_cms_site')) {
-                    $request->attributes->set('_sfs_cms_site', $this->cmsConfig->getSite($request->query->get('_sfs_cms_site')));
+                if (!$request->attributes->has('_sfs_cms_site')) {
+                    if ($request->query->has('_sfs_cms_site')) {
+                        $request->attributes->set('_sfs_cms_site', $this->cmsConfig->getSite($request->query->get('_sfs_cms_site')));
+                    } elseif ($request->query->has('_site')) {
+                        $request->attributes->set('_sfs_cms_site', $this->cmsConfig->getSite($request->query->get('_site')));
+                    } elseif ($request->attributes->has('_site')) {
+                        $request->attributes->set('_sfs_cms_site', $this->cmsConfig->getSite($request->attributes->get('_site')));
+                    }
                 }
-                if (!$request->attributes->has('_locale') && $request->query->has('_locale')) {
+
+                if ($request->attributes->has('_locale')) {
+                    $request->setLocale($request->attributes->get('_locale'));
+                } elseif ($request->query->has('_locale')) {
                     $request->attributes->set('_locale', $request->query->get('_locale'));
                     $request->setLocale($request->attributes->get('_locale'));
                 }
