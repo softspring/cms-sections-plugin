@@ -12,7 +12,6 @@ use Softspring\CmsSectionsPlugin\Model\SectionVersionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
 class SectionController extends AbstractController
