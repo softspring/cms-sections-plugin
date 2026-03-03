@@ -54,7 +54,7 @@ class SectionUpdateForm extends AbstractType implements SectionUpdateFormInterfa
 
         $builder->add('defaultLocale', ChoiceType::class, [
             'choice_translation_domain' => false,
-            'choices' => array_combine(array_map(fn ($lang) => Locales::getName($lang), $options['locales']), $options['locales']),
+            'choices' => array_combine(array_map(fn (string $lang): string => Locales::getName($lang), $options['locales']), $options['locales']),
             'default_value' => $options['default_locale'],
         ]);
 
@@ -62,8 +62,8 @@ class SectionUpdateForm extends AbstractType implements SectionUpdateFormInterfa
             'multiple' => true,
             'expanded' => true,
             'choice_translation_domain' => false,
-            'choices' => array_combine(array_map(fn ($lang) => Locales::getName($lang), $options['locales']), $options['locales']),
-            'constraints' => new Count(['min' => 1]),
+            'choices' => array_combine(array_map(fn (string $lang): string => Locales::getName($lang), $options['locales']), $options['locales']),
+            'constraints' => new Count(min: 1),
             'default_value' => [$options['default_locale']],
         ]);
 

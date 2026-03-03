@@ -6,6 +6,7 @@ use Softspring\CmsBundle\Config\CmsConfig;
 use Softspring\CmsSectionsPlugin\Manager\SectionManagerInterface;
 use Softspring\CmsSectionsPlugin\Model\SectionVersionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class SectionVersionDeleteVoter implements VoterInterface
@@ -14,7 +15,7 @@ class SectionVersionDeleteVoter implements VoterInterface
     {
     }
 
-    public function vote(TokenInterface $token, $subject, array $attributes): int
+    public function vote(TokenInterface $token, $subject, array $attributes, ?Vote $vote = null): int
     {
         // check version
         if (!is_object($subject) || !$subject instanceof SectionVersionInterface) {

@@ -87,7 +87,7 @@ class CreateListener extends AbstractSectionVersionListener
         $prevVersion = $request->attributes->get('prevVersion');
 
         if ($prevVersion) {
-            $prevVersion = $section->getVersions()->filter(fn (SectionVersionInterface $version) => $version->getId() == $prevVersion)->first();
+            $prevVersion = $section->getVersions()->filter(fn (SectionVersionInterface $version): bool => $version->getId() == $prevVersion)->first();
         }
 
         $request->attributes->set('prevVersion', $prevVersion ?: $section->getLastVersion());
@@ -167,7 +167,7 @@ class CreateListener extends AbstractSectionVersionListener
     {
         $request = $event->getRequest();
 
-        if (1 == $event->getForm()->getErrors()->count() && '_ok' == $event->getForm()->getErrors()[0]->getOrigin()->getName()) {
+        if (1 === $event->getForm()->getErrors()->count() && '_ok' === $event->getForm()->getErrors()[0]->getOrigin()->getName()) {
             return;
         }
 
@@ -177,10 +177,8 @@ class CreateListener extends AbstractSectionVersionListener
     public function onView(ViewEvent $event): void
     {
         $request = $event->getRequest();
-        /** @var SectionInterface $section */
-        $section = $request->attributes->get('section');
-        /** @var SectionVersionInterface $version */
-        $version = $request->attributes->get('version');
+        $request->attributes->get('section');
+        $request->attributes->get('version');
 
         // preview mode
         $request->attributes->set('_cms_preview', true);

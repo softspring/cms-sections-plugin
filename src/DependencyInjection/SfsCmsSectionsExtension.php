@@ -43,10 +43,6 @@ class SfsCmsSectionsExtension extends Extension implements PrependExtensionInter
         $loader->load('admin_services.yaml');
         $loader->load('entity_transformer.yaml');
 
-        if (class_exists('Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle')) {
-            $loader->load('deprecated_param_converters.yaml');
-        }
-
         if (interface_exists('Symfony\Component\HttpKernel\Controller\ValueResolverInterface')) {
             $loader->load('value_resolvers.yaml');
         }

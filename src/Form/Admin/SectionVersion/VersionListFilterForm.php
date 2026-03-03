@@ -39,7 +39,7 @@ class VersionListFilterForm extends PaginatorForm implements VersionListFilterFo
         $resolver->setRequired('section');
         $resolver->setAllowedTypes('section', [SectionInterface::class]);
 
-        $resolver->addNormalizer('query_builder', function (Options $options, QueryBuilder $qb) {
+        $resolver->addNormalizer('query_builder', function (Options $options, QueryBuilder $qb): QueryBuilder {
             $alias = $qb->getDQLPart('from')[0]->getAlias();
             $qb->andWhere("$alias.section = :section");
             $qb->setParameter('section', $options['section']);

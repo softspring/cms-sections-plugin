@@ -8,9 +8,9 @@ use Softspring\CmsBundle\Model\Traits\TranslatableConfigTrait;
 use Softspring\CmsBundle\Model\Traits\VersionableTrait;
 
 /**
- * @property SectionVersionInterface[]|Collection          $versions
- * @property SectionVersionInterface|VersionInterface|null $publishedVersion
- * @property SectionVersionInterface|VersionInterface|null $lastVersion
+ * @property SectionVersionInterface[]|Collection $versions
+ * @property SectionVersionInterface|null         $publishedVersion
+ * @property SectionVersionInterface|null         $lastVersion
  */
 abstract class Section implements SectionInterface
 {

@@ -20,15 +20,15 @@ class RenderExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('sfs_cms_section_find', [$this, 'find'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_find_by_*', [$this, 'findBy'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section', [$this, 'renderEmbed'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_embed', [$this, 'renderEmbed'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_embed_by_*', [$this, 'renderEmbedBy'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_esi', [$this, 'renderEsi'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_esi_by_*', [$this, 'renderEsiBy'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_ajax', [$this, 'renderAjax'], ['is_safe' => ['html']]),
-            new TwigFunction('sfs_cms_section_ajax_by_*', [$this, 'renderAjaxBy'], ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_find', $this->find(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_find_by_*', $this->findBy(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section', $this->renderEmbed(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_embed', $this->renderEmbed(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_embed_by_*', $this->renderEmbedBy(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_esi', $this->renderEsi(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_esi_by_*', $this->renderEsiBy(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_ajax', $this->renderAjax(...), ['is_safe' => ['html']]),
+            new TwigFunction('sfs_cms_section_ajax_by_*', $this->renderAjaxBy(...), ['is_safe' => ['html']]),
         ];
     }
 
@@ -63,7 +63,7 @@ class RenderExtension extends AbstractExtension
      */
     public function renderEmbed(SectionInterface|string|null $sectionOrSectionId): string
     {
-        if (!($section = $this->getSection($sectionOrSectionId))) {
+        if (!($section = $this->getSection($sectionOrSectionId)) instanceof SectionInterface) {
             return "<!-- section {$sectionOrSectionId} not found -->";
         }
 
@@ -86,7 +86,7 @@ class RenderExtension extends AbstractExtension
      */
     public function renderEsi(SectionInterface|string|null $sectionOrSectionId): string
     {
-        if (!($section = $this->getSection($sectionOrSectionId))) {
+        if (!($section = $this->getSection($sectionOrSectionId)) instanceof SectionInterface) {
             return "<!-- section {$sectionOrSectionId} not found -->";
         }
 
@@ -109,7 +109,7 @@ class RenderExtension extends AbstractExtension
      */
     public function renderAjax(SectionInterface|string|null $sectionOrSectionId): string
     {
-        if (!($section = $this->getSection($sectionOrSectionId))) {
+        if (!($section = $this->getSection($sectionOrSectionId)) instanceof SectionInterface) {
             return "<!-- section {$sectionOrSectionId} not found -->";
         }
 

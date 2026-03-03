@@ -4,6 +4,7 @@ namespace Softspring\CmsSectionsPlugin\Helper;
 
 use Softspring\CmsBundle\Config\CmsConfig;
 use Softspring\CmsSectionsPlugin\Model\SectionVersionInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class CompileHelper
@@ -22,7 +23,7 @@ class CompileHelper
             return false;
         }
 
-        if (!$this->requestStack->getCurrentRequest()) {
+        if (!$this->requestStack->getCurrentRequest() instanceof Request) {
             return false; // not yet ready for render in fixtures, TODO improve this to allow render in fixtures
         }
 

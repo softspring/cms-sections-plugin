@@ -4,6 +4,7 @@ namespace Softspring\CmsSectionsPlugin\Security\Voter;
 
 use Softspring\CmsSectionsPlugin\Model\SectionVersionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class SectionVersionVoter implements VoterInterface
@@ -12,7 +13,7 @@ class SectionVersionVoter implements VoterInterface
     {
     }
 
-    public function vote(TokenInterface $token, $subject, array $attributes): int
+    public function vote(TokenInterface $token, $subject, array $attributes, ?Vote $vote = null): int
     {
         if (!is_object($subject) || !$subject instanceof SectionVersionInterface) {
             return VoterInterface::ACCESS_ABSTAIN;

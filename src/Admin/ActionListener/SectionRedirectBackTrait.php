@@ -21,14 +21,14 @@ trait SectionRedirectBackTrait
                 return new RedirectResponse($this->router->generate(name: 'sfs_cms_admin_sections_versions', parameters: ['section' => $entity, 'page' => $page]));
 
             case 'version_info':
-                if ($version) {
+                if ($version instanceof SectionVersionInterface) {
                     return new RedirectResponse($this->router->generate('sfs_cms_admin_sections_version_info', ['section' => $entity, 'version' => $version]));
                 }
 
                 return new RedirectResponse($this->router->generate(name: 'sfs_cms_admin_sections_versions', parameters: ['section' => $entity]));
 
             case 'preview':
-                if ($version) {
+                if ($version instanceof SectionVersionInterface) {
                     return new RedirectResponse($this->router->generate('sfs_cms_admin_sections_preview', ['section' => $entity, 'version' => $version]));
                 }
 

@@ -50,7 +50,7 @@ class SectionController extends AbstractController
             if (!$section) {
                 $this->cmsLogger && $this->cmsLogger->error(sprintf('CMS missing section %s', $section));
 
-                if ($request->get('do_not_throw_not_found')) {
+                if ($request->attributes->get('do_not_throw_not_found', $request->query->get('do_not_throw_not_found'))) {
                     return $response;
                 }
 
@@ -75,7 +75,7 @@ class SectionController extends AbstractController
             }
 
             if (!$publishedVersion) {
-                if ($request->get('do_not_throw_not_found')) {
+                if ($request->attributes->get('do_not_throw_not_found', $request->query->get('do_not_throw_not_found'))) {
                     return $response;
                 }
 

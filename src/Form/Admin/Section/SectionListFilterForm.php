@@ -36,11 +36,11 @@ class SectionListFilterForm extends PaginatorForm implements SectionListFilterFo
             'order_default_value' => 'name',
         ]);
 
-        $resolver->setNormalizer('label_format', function (Options $options, $value) {
+        $resolver->setNormalizer('label_format', function (Options $options, $value): string {
             return 'admin_sections.list.filter_form.%name%.label';
         });
 
-        $resolver->addNormalizer('query_builder', function (Options $options, QueryBuilder $qb) {
+        $resolver->addNormalizer('query_builder', function (Options $options, QueryBuilder $qb): QueryBuilder {
             $alias = $qb->getDQLPart('from')[0]->getAlias();
             $qb->select("$alias, pv");
             $qb->leftJoin("{$alias}.publishedVersion", 'pv');

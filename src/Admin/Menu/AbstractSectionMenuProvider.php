@@ -30,7 +30,7 @@ abstract class AbstractSectionMenuProvider implements SectionMenuProviderInterfa
     {
         $text = $this->translator->trans("admin_sections.tabs_menu.$id", [], 'sfs_cms_admin');
         $url = $this->router->generate("sfs_cms_admin_sections_{$id}", ['section' => $section->getId()]);
-        $active = $current == $id;
+        $active = $current === $id;
         $disabled = ('#' === $url) || ($isGranted && !$this->authorizationChecker->isGranted($isGranted, $section));
 
         return new MenuItem($id, $text, $url, $active, $disabled);

@@ -3,3 +3,12 @@ parameters:
         # until symfony min version is increased to 6.4
         - src/Request/ValueResolver/SectionValueResolver.php
         - src/Request/ValueResolver/SectionVersionValueResolver.php
+    ignoreErrors:
+        -
+            identifier: class.notFound
+            path: src/Security/Voter/SectionVersionDeleteVoter.php
+            reportUnmatched: false
+        -
+            identifier: class.notFound
+            path: src/Security/Voter/SectionVersionVoter.php
+            reportUnmatched: false

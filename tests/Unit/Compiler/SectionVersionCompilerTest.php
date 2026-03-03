@@ -2,6 +2,7 @@
 
 namespace Softspring\CmsSectionsPlugin\Test\Unit\Compiler;
 
+use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Softspring\CmsBundle\Compiler\CompileException;
@@ -24,11 +25,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SectionVersionCompilerTest extends TestCase
 {
-    protected SectionVersionRenderer|MockObject $sectionVersionRenderMock;
-    protected CompileHelper|MockObject $compileHelperMock;
-    protected CmsHelper|MockObject $cmsHelperMock;
-    protected CmsConfig|MockObject $cmsConfigMock;
-    protected CompiledDataManagerInterface|MockObject $compiledDataManagerMock;
+    protected MockObject $sectionVersionRenderMock;
+    protected MockObject $compileHelperMock;
+    protected MockObject $cmsHelperMock;
+    protected MockObject $cmsConfigMock;
+    protected MockObject $compiledDataManagerMock;
     protected SectionVersionCompiler $compiler;
 
     protected function setUp(): void
@@ -54,11 +55,11 @@ class SectionVersionCompilerTest extends TestCase
         $this->cmsConfigMock->method('getSites')->willReturn([$site1, $site2]);
 
         $this->compiledDataManagerMock->method('createEntity')
-            ->willReturnCallback(function() {
+            ->willReturnCallback(function(): CompiledData {
                 return new CompiledData();
             });
 
-        $this->compiledDataManagerMock->method('getCompileKeyFromRequest')->willReturnCallback(function(VersionInterface $version, Request $request) {
+        $this->compiledDataManagerMock->method('getCompileKeyFromRequest')->willReturnCallback(function(VersionInterface $version, Request $request): string {
             return sprintf('test_key/%s/%s', $request->getLocale(), $request->attributes->get('_sfs_cms_site'));
         });
     }
@@ -72,8 +73,8 @@ class SectionVersionCompilerTest extends TestCase
 
     public function testCompileRequestRenderErrors(): void
     {
-        $this->sectionVersionRenderMock->method('render')->willReturnCallback(function (SectionVersionInterface $version, Request $request, ?RenderErrorList $renderErrorList = null) {
-            $renderErrorList->add('test_template', new \Exception('Test error'), ['context' => 'data']);
+        $this->sectionVersionRenderMock->method('render')->willReturnCallback(function (SectionVersionInterface $version, Request $request, ?RenderErrorList $renderErrorList = null): string {
+            $renderErrorList->add('test_template', new Exception('Test error'), ['context' => 'data']);
             return 'rendered section';
         });
 
@@ -110,7 +111,7 @@ class SectionVersionCompilerTest extends TestCase
     public function testCompileRequestWithInvalidException(): void
     {
         $this->expectException(CompileException::class);
-        $this->sectionVersionRenderMock->method('render')->willThrowException(new \Exception('Test error'));
+        $this->sectionVersionRenderMock->method('render')->willThrowException(new Exception('Test error'));
 
         $this->compiler->compileRequest(new SectionVersion(), new Request());
     }

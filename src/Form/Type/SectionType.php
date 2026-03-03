@@ -4,6 +4,7 @@ namespace Softspring\CmsSectionsPlugin\Form\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Softspring\CmsBundle\Config\CmsConfig;
 use Softspring\CmsBundle\Helper\LocaleHelper;
 use Softspring\CmsSectionsPlugin\Model\SectionInterface;
@@ -45,8 +46,8 @@ class SectionType extends AbstractType
             'class' => SectionInterface::class,
             'em' => $this->em,
             'required' => false,
-            'query_builder' => fn (EntityRepository $entityRepository) => $entityRepository->createQueryBuilder('b'),
-            'choice_label' => function (SectionInterface $section) {
+            'query_builder' => fn (EntityRepository $entityRepository): QueryBuilder => $entityRepository->createQueryBuilder('b'),
+            'choice_label' => function (SectionInterface $section): ?string {
                 $label = $section->getName();
 
                 if (!$section->getPublishedVersion()) {
@@ -55,20 +56,20 @@ class SectionType extends AbstractType
 
                 return $label;
             },
-            'choice_filter' => function (?SectionInterface $section = null) {
+            'choice_filter' => function (?SectionInterface $section = null): bool {
                 $currentSection = $this->requestStack->getCurrentRequest()?->attributes->get('section');
 
                 return !$currentSection || $currentSection->getId() !== $section?->getId();
             },
-            'choice_attr' => function (?SectionInterface $section) {
+            'choice_attr' => function (?SectionInterface $section): array {
                 $attr = [
                     'data-section-preview' => '',
                 ];
 
-                if ($section) {
+                if ($section instanceof SectionInterface) {
                     $attr['data-section-url'] = $this->router->generate('sfs_cms_admin_sections_details', ['section' => $section->getId()]);
 
-                    if ('draft' == $section->getStatus()) {
+                    if ('draft' === $section->getStatus()) {
                         $attr['data-section-draft'] = '';
                     }
 
