@@ -78,12 +78,12 @@ class SectionType extends AbstractType
                     }
 
                     $attr['data-section-preview'] = '';
-                    $attr['data-section-notes'] = nl2br($section->getNotes());
+                    $attr['data-section-notes'] = nl2br($section->getNotes() ?? '');
 
                     foreach ($this->cmsConfig->getSites() as $site) {
                         foreach ($this->localeHelper->getEnabledLocales() as $locale) {
                             $attr['data-section-preview'] .= '<div data-lang="'.$locale.'" data-site="'.$site.'" class="section-preview"'
-                                .' data-preview-url="'.$this->router->generate('sfs_cms_admin_sections_render_preview', ['section' => $section->getId(), '_locale' => $locale, '_sfs_cms_site' => $site]).'"'
+                                .' data-preview-url="'.$this->router->generate('sfs_cms_admin_sections_render_preview', ['section' => $section->getId(), '_locale' => $locale, '_sfs_cms_site' => $site->getId()]).'"'
                                 .'></div>';
                         }
                     }
