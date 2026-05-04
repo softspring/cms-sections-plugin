@@ -22,7 +22,7 @@ final class Version20250612105522 extends AbstractMigration
             $this->addSql('CREATE UNIQUE INDEX UNIQ_739F75FE5E237E06 ON cms_section (name)');
             $this->addSql('CREATE INDEX IDX_739F75FEB5D68A8D ON cms_section (published_version_id)');
             $this->addSql('CREATE INDEX IDX_739F75FEA2C84DEF ON cms_section (last_version_id)');
-            $this->addSql('CREATE TABLE cms_section_version (id CHAR(36) NOT NULL, section_id CHAR(36) DEFAULT NULL, data JSON DEFAULT NULL, meta JSON DEFAULT NULL, origin SMALLINT DEFAULT NULL, origin_description VARCHAR(255) DEFAULT NULL, note VARCHAR(255) DEFAULT NULL, created_at INTEGER DEFAULT NULL, version_number INTEGER DEFAULT NULL, keep SMALLINT DEFAULT 0 NOT NULL, compile_errors SMALLINT DEFAULT 0 NOT NULL, PRIMARY KEY(id))');
+            $this->addSql('CREATE TABLE cms_section_version (id CHAR(36) NOT NULL, section_id CHAR(36) DEFAULT NULL, data JSON DEFAULT NULL, meta JSON DEFAULT NULL, origin SMALLINT DEFAULT NULL, origin_description VARCHAR(255) DEFAULT NULL, note VARCHAR(255) DEFAULT NULL, created_at INTEGER DEFAULT NULL, version_number INTEGER DEFAULT NULL, keep BOOLEAN DEFAULT FALSE NOT NULL, compile_errors BOOLEAN DEFAULT FALSE NOT NULL, PRIMARY KEY(id))');
             $this->addSql('CREATE INDEX IDX_CDA7F5C3D823E37A ON cms_section_version (section_id)');
             $this->addSql('CREATE TABLE cms_section_version_medias (section_version_id CHAR(36) NOT NULL, media_id CHAR(36) NOT NULL, PRIMARY KEY(section_version_id, media_id))');
             $this->addSql('CREATE INDEX IDX_156B30E3D60C1DDA ON cms_section_version_medias (section_version_id)');
