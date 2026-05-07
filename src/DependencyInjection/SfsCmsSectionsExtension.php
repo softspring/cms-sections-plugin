@@ -2,6 +2,7 @@
 
 namespace Softspring\CmsSectionsPlugin\DependencyInjection;
 
+use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -61,6 +62,8 @@ class SfsCmsSectionsExtension extends Extension implements PrependExtensionInter
 
     public function prepend(ContainerBuilder $container): void
     {
+        $assetsPath = \dirname(__DIR__, 2).'/assets';
+        $assetsDistPath = $assetsPath.'/dist';
         // add a default config to force load target_entities, will be overwritten by ResolveDoctrineTargetEntityPass
         //        $doctrineConfig['orm']['resolve_target_entities'][ArticleContentInterface::class] = ArticleContent::class;
 
@@ -86,5 +89,15 @@ class SfsCmsSectionsExtension extends Extension implements PrependExtensionInter
                 'Softspring\CmsSectionsPlugin\Migrations' => '@SfsCmsSectionsPlugin/src/Migrations',
             ]),
         ]);
+
+        if (interface_exists(AssetMapperInterface::class)) {
+            $container->prependExtensionConfig('framework', [
+                'asset_mapper' => [
+                    'paths' => [
+                        $assetsDistPath => '@softspring/cms-sections-plugin',
+                    ],
+                ],
+            ]);
+        }
     }
 }
