@@ -1,0 +1,16 @@
+{% trans_default_domain 'sfs_cms_admin' %}
+
+{{ form_errors(form) }}
+
+<div class="row g-5 align-items-start">
+    <div class="col-12 col-xl-8">
+        {% include '@SfsCmsSectionsPlugin/admin/section/_form_fields_identifier.html.twig' with {form: form} only %}
+        {% include '@SfsCmsSectionsPlugin/admin/section/_form_fields_configuration.html.twig' with {form: form} only %}
+    </div>
+
+    <div class="col-12 col-xl-4">
+        {% include '@SfsCmsSectionsPlugin/admin/section/_form_fields_languages.html.twig' with {form: form} only %}
+    </div>
+</div>
+
+{{ form_rest(form) }}

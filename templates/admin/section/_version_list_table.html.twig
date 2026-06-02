@@ -18,8 +18,15 @@
             <th>&nbsp;</th>
         {% endblock ths %}
 
+        {% block tr_attributes %}
+            {% set version = element %}
+            {% if is_granted('PERMISSION_SFS_CMS_ADMIN_SECTION_VERSION_INFO', version) %}
+                data-row-href="{{ url('sfs_cms_admin_sections_version_info', {'section':section.id, 'version':version.id}) }}"
+            {% endif %}
+        {% endblock %}
+
         {% block tds %}
-            {% set version = version|default(entity|default(element)) %}
+            {% set version = element %}
 
             <td>v{{ version.versionNumber }} {% if version.hasCompileErrors %}<i
                         class="bi bi-exclamation-triangle text-danger"
@@ -69,7 +76,7 @@
             <td>
                 {% if is_granted('PERMISSION_SFS_CMS_ADMIN_SECTION_VERSION_INFO', version) %}
                     <a href="{{ url('sfs_cms_admin_sections_version_info', {'section':section.id, 'version':version.id}) }}"
-                       class="ms-2 text-nowrap">{{ ('admin_sections.versions.actions.info.link')|trans }} <span
+                       class="ms-2 text-nowrap hidden-on-clickable-row">{{ ('admin_sections.versions.actions.info.link')|trans }} <span
                                 class="bi bi-info"></span></a>
                 {% endif %}
 

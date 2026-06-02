@@ -36,22 +36,22 @@
     {% endif %}
 
     <div class="container-fluid">
-        <div class="row">
+        <div class="row g-3">
             <div class="col">
-                {% include '@SfsCmsSectionsPlugin/admin/section/_read_general.html.twig' %}
+                {% include '@SfsCmsSectionsPlugin/admin/section/_read_general.html.twig' with {'container_classes': 'card'} %}
             </div>
             <div class="col">
-                {% include '@SfsCmsSectionsPlugin/admin/section/_read_caching.html.twig' %}
+                {% include '@SfsCmsSectionsPlugin/admin/section/_read_caching.html.twig' with {'container_classes': 'card'} %}
             </div>
             <div class="col">
-                {% include '@SfsCmsSectionsPlugin/admin/section/_read_usages.html.twig' %}
+                {% include '@SfsCmsSectionsPlugin/admin/section/_read_usages.html.twig' with {'container_classes': 'card'} %}
             </div>
             <div class="col">
-                {% include '@SfsCmsSectionsPlugin/admin/section/_read_translations.html.twig' %}
+                {% include '@SfsCmsSectionsPlugin/admin/section/_read_translations.html.twig' with {'container_classes': 'card'} %}
             </div>
         </div>
 
-        <div class="row">
+        <div class="row g-3">
             <div class="col">
                 {% include '@SfsCmsSectionsPlugin/admin/section/_read_versions.html.twig' with {'backSection': 'details'} %}
             </div>

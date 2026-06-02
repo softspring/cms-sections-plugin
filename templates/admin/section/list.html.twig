@@ -22,8 +22,7 @@
         {% if filterForm.vars.submitted or entities|length %}
             <div class="mb-4">
                 {{ form_start(filterForm) }}
-                <button class="btn btn-link px-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter"><i class="bi bi-filter h4 text-muted align-middle"></i> Filters</button>
-                <div class="row align-items-end border shadow-sm rounded p-3 collapse show" id="collapseFilter">
+                <div class="row align-items-end" id="collapseFilter">
                     {% if filterForm.name is defined %}<div class="col-12 col-md-6 col-lg-2">{{ form_row(filterForm.name) }}</div>{% endif %}
                     {% if filterForm.status is defined %}<div class="col-12 col-md-6 col-lg-2">{{ form_row(filterForm.status, {'attr':{'onchange':'submit()'}}) }}</div>{% endif %}
                     {% if filterForm.publishedVersionSection is defined %}<div class="col-12 col-md-6 col-lg-4">{{ form_row(filterForm.publishedVersionSection, {'attr':{'onchange':'submit()'}}) }}</div>{% endif %}

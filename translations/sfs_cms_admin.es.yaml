@@ -18,6 +18,13 @@ admin_sections:
         ttl.label: "Tiempo de cache"
         defaultLocale.label: "Idioma por defecto"
         locales.label: "Idiomas"
+        sections:
+            identifier:
+                title: "Identificador"
+            configuration:
+                title: "Configuración de la sección"
+            languages:
+                title: "Idiomas"
         notes:
             label: "Notas de integración"
             help: "Esta nota es solo para uso interno, se mostrará al integrar secciones en contenidos. (puede contener HTML)"
@@ -114,6 +121,7 @@ admin_sections:
             update.link: "Editar"
         usages:
             title: "Usos de la sección"
+            empty: "Aún no se ha utilizado la sección."
 
     delete:
         meta.title: "Eliminar sección"
@@ -251,4 +259,3 @@ admin_sections:
             cancel.button: "Cancelar"
         success_flash: "La versión se ha eliminado"
         failed_flash: "Se ha producido un error al eliminar la versión<br/><small>%exception%</small>"
-

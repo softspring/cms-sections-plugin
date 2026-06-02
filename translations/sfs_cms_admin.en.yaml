@@ -18,6 +18,13 @@ admin_sections:
         ttl.label: "Cache time"
         defaultLocale.label: "Default language"
         locales.label: "Languages"
+        sections:
+            identifier:
+                title: "Identifier"
+            configuration:
+                title: "Section configuration"
+            languages:
+                title: "Languages"
         notes:
             label: "Integration notes"
             help: "This note is only for internal use, will be displayed when integrating sections in contents. (can contain HTML)"
@@ -114,6 +121,7 @@ admin_sections:
             update.link: "Edit"
         usages:
             title: "Section usages"
+            empty: "This section has not been used yet."
 
     delete:
         meta.title: "Delete section"

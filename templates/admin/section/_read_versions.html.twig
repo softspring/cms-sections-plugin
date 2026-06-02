@@ -1,18 +1,12 @@
 {% trans_default_domain 'sfs_cms_admin' %}
 
-{% embed '@SfsCms/admin/_embeds/_card.html.twig' with {'title': ('admin_sections.read.versions.title')|trans} %}
-    {% trans_default_domain 'sfs_cms_admin' %}
+<h5 class="border-bottom border-1 border-light pb-2 mb-3 d-flex align-items-center justify-content-between gap-2">
+    <span>{{ ('admin_sections.read.versions.title')|trans }}</span>
+    {% if is_granted('PERMISSION_SFS_CMS_ADMIN_SECTION_VERSIONS', section) %}
+        <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="{{ url('sfs_cms_admin_sections_versions', {'section':section.id}) }}">{{ ('admin_sections.read.versions.more.link')|trans }}</a>
+    {% else %}
+        <a class="btn btn-sm btn-outline-secondary flex-shrink-0 disabled">{{ ('admin_sections.read.versions.more.link')|trans }}</a>
+    {% endif %}
+</h5>
 
-    {% block title %}
-        {% if is_granted('PERMISSION_SFS_CMS_ADMIN_SECTION_VERSIONS', section) %}
-            <a class="btn btn-sm btn-outline-secondary float-end"  href="{{ url('sfs_cms_admin_sections_versions', {'section':section.id}) }}">{{ ('admin_sections.read.versions.more.link')|trans }}</a>
-        {% else %}
-            <a class="btn btn-sm btn-outline-secondary float-end disabled">{{ ('admin_sections.read.versions.more.link')|trans }}</a>
-        {% endif %}
-        {{ parent() }}
-    {% endblock %}
-
-    {% block content %}
-        {% include '@SfsCmsSectionsPlugin/admin/section/_version_list_table.html.twig' with {'versions': lastestVersions} %}
-    {% endblock %}
-{% endembed %}
+{% include '@SfsCmsSectionsPlugin/admin/section/_version_list_table.html.twig' with {'versions': lastestVersions} %}
