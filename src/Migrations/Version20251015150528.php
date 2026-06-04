@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Softspring\CmsSectionsPlugin\Migrations;
 
-use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
+use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 final class Version20251015150528 extends AbstractMigration

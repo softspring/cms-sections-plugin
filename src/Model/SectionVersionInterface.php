@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softspring\CmsSectionsPlugin\Model;
 
 use Softspring\CmsBundle\Model\CompilableInterface;

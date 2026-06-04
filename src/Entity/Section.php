@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softspring\CmsSectionsPlugin\Entity;
 
 use Softspring\CmsSectionsPlugin\Model\Section as SectionModel;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softspring\CmsSectionsPlugin\Admin\ActionListener\Section;
 
 class ListListener extends AbstractSectionListener

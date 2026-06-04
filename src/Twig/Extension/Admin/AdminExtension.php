@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softspring\CmsSectionsPlugin\Twig\Extension\Admin;
 
 use Softspring\CmsBundle\Admin\Menu\MenuManager;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softspring\CmsSectionsPlugin\Request\ValueResolver;
 
 use Softspring\CmsSectionsPlugin\Manager\SectionVersionManagerInterface;

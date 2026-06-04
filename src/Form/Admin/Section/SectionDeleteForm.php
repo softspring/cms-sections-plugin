@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softspring\CmsSectionsPlugin\Form\Admin\Section;
 
 use Doctrine\ORM\EntityManagerInterface;
