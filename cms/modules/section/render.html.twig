@@ -1,12 +1,24 @@
 {% import '@SfsCms/macros/modules_render.html.twig' as module %}
 
+{% set is_admin_preview = app.request.attributes.has('_cms_preview') and app.request.attributes.get('_cms_preview') %}
+
 {% if section %}
     {% if id|default(false) or class|default(false) %}<div {{ module.id(id) }} {{ module.class(class) }}>{% endif %}
         {% if mode == 'esi' %}
-            <esi:include onerror="continue" src="{{ fragment_uri(controller('Softspring\\CmsSectionsPlugin\\Controller\\SectionController::renderById', {'section':section.id, '_locale':app.request.locale}))|raw }}" />
+            {% if is_admin_preview %}
+                {% set controller_params = {'section':section.id, '_locale':app.request.locale, 'adminPreview': true, '_site': app.request.attributes.get('_site')} %}
+            {% else %}{# is render #}
+                {% set controller_params = {'section':section.id, '_locale':app.request.locale} %}
+            {% endif %}
+            <esi:include onerror="continue" src="{{ fragment_uri(controller('Softspring\\CmsSectionsPlugin\\Controller\\SectionController::renderById', controller_params))|raw }}" />
         {% elseif mode == 'ajax' %}
             {% set section_div_id = 's'~random() %}
-            <div data-sfs-cms-ajax="section" data-sfs-cms-section-id="{{ section.id }}" id="{{ section_div_id }}" data-href="{{ url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale}) }}">
+            {% if is_admin_preview %}
+                {% set section_url = url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, '_site': app.request.attributes.get('_site'), 'admin_preview': true}) %}
+            {% else %}{# is render #}
+                {% set section_url = url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale}) %}
+            {% endif %}
+            <div data-sfs-cms-ajax="section" data-sfs-cms-section-id="{{ section.id }}" id="{{ section_div_id }}" data-href="{{ section_url }}">
                 <script type="text/javascript">
                     document.addEventListener('DOMContentLoaded', function () {
                         const sectionDiv = document.getElementById('{{ section_div_id }}');
@@ -26,7 +38,11 @@
                 </script>
             </div>
         {% else %}
-            {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true})) }}
+            {% if is_admin_preview %}
+                {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true, '_site': app.request.attributes.get('_site'), 'admin_preview': true})) }}
+            {% else %}{# is render #}
+                {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true})) }}
+            {% endif %}
         {% endif %}
     {% if id|default(false) or class|default(false) %}</div>{% endif %}
 {% endif %}
