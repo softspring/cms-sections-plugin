@@ -39,7 +39,7 @@ abstract class SectionVersion implements SectionVersionInterface
 
     public function setParent(?VersionableInterface $parent): void
     {
-        if ($parent && !$parent instanceof SectionInterface) {
+        if ($parent instanceof VersionableInterface && !$parent instanceof SectionInterface) {
             throw new InvalidArgumentException('Parent must implement SectionInterface');
         }
         $this->setSection($parent);

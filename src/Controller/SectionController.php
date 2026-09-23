@@ -52,7 +52,9 @@ class SectionController extends AbstractController
             $section = $this->sectionManager->getRepository()->findOneById($section);
 
             if (!$section) {
-                $this->cmsLogger && $this->cmsLogger->error(sprintf('CMS missing section %s', $section));
+                if ($this->cmsLogger instanceof LoggerInterface) {
+                    $this->cmsLogger->error(sprintf('CMS missing section %s', $section));
+                }
 
                 if ($request->attributes->get('do_not_throw_not_found', $request->query->get('do_not_throw_not_found'))) {
                     return $response;
@@ -119,7 +121,9 @@ class SectionController extends AbstractController
 
             return $response;
         } catch (Exception $e) {
-            $this->cmsLogger && $this->cmsLogger->error(sprintf('An error occurred while rendering section with id "%s": %s', $section->getId(), $e->getMessage()), ['exception' => $e]);
+            if ($this->cmsLogger instanceof LoggerInterface) {
+                $this->cmsLogger->error(sprintf('An error occurred while rendering section with id "%s": %s', $section->getId(), $e->getMessage()), ['exception' => $e]);
+            }
             throw $e;
         }
     }

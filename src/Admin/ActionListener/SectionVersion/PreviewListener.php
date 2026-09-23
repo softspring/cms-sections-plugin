@@ -65,7 +65,9 @@ class PreviewListener extends AbstractSectionVersionListener
      */
     public function onFoundShowSection(EntityFoundEvent $event): void
     {
-        $this->webDebugToolbarListener && $this->webDebugToolbarListener->setMode(WebDebugToolbarListener::DISABLED);
+        if ($this->webDebugToolbarListener instanceof WebDebugToolbarListener) {
+            $this->webDebugToolbarListener->setMode(WebDebugToolbarListener::DISABLED);
+        }
         //        $event->setResponse($this->getContentResponse($event->getRequest(), $event->getEntity()));
     }
 
@@ -78,7 +80,9 @@ class PreviewListener extends AbstractSectionVersionListener
 
     protected function getContentResponse(Request $request, SectionVersionInterface $version): Response
     {
-        $this->webDebugToolbarListener && $this->webDebugToolbarListener->setMode(WebDebugToolbarListener::DISABLED);
+        if ($this->webDebugToolbarListener instanceof WebDebugToolbarListener) {
+            $this->webDebugToolbarListener->setMode(WebDebugToolbarListener::DISABLED);
+        }
 
         $request->setLocale($request->query->get('_locale', $request->getLocale()));
 

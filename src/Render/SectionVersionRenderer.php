@@ -34,14 +34,22 @@ class SectionVersionRenderer
 
             $versionData = $version->getData() ?? [];
 
-            $renderErrorList && $renderErrorList->resetLocation();
-            $renderErrorList && $renderErrorList->pushLocation('data');
+            if ($renderErrorList instanceof RenderErrorList) {
+                $renderErrorList->resetLocation();
+            }
+            if ($renderErrorList instanceof RenderErrorList) {
+                $renderErrorList->pushLocation('data');
+            }
 
             $section = '';
             foreach ($versionData as $m => $moduleData) {
-                $renderErrorList && $renderErrorList->pushLocation($m);
+                if ($renderErrorList instanceof RenderErrorList) {
+                    $renderErrorList->pushLocation($m);
+                }
                 $section .= $moduleRenderer->render($moduleData, $this->profilerDebugCollectorData, [], $renderErrorList);
-                $renderErrorList && $renderErrorList->popLocation();
+                if ($renderErrorList instanceof RenderErrorList) {
+                    $renderErrorList->popLocation();
+                }
             }
 
             return $section;
