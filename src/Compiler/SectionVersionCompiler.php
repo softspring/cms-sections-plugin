@@ -41,7 +41,7 @@ class SectionVersionCompiler extends AbstractVersionCompiler
 
         $compiledDatas = [];
 
-        foreach ($this->cmsHelper->config()->getSites() as $site) {
+        foreach ($this->cmsHelper->config()->getSites(true) as $site) {
             foreach ($version->getSection()->getLocales() ?? [] as $locale) {
                 if ($this->cmsLogger instanceof LoggerInterface) {
                     $this->cmsLogger->debug(sprintf('Compiling "%s" section version for "%s" in "%s"', $version->getSection()->getName(), "$site", $locale));

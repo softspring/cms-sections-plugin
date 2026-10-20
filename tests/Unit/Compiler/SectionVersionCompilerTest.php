@@ -52,7 +52,12 @@ class SectionVersionCompilerTest extends TestCase
 
         $site1 = new Site(); $site1->setId('site1'); $site1->setConfig(['hosts'=>[]]);
         $site2 = new Site(); $site2->setId('site2'); $site2->setConfig(['hosts'=>[]]);
-        $this->cmsConfigMock->method('getSites')->willReturn([$site1, $site2]);
+        $disabledSite = new Site();
+        $disabledSite->setId('disabled');
+        $disabledSite->setConfig(['enabled' => false, 'hosts' => []]);
+        $this->cmsConfigMock->method('getSites')->willReturnCallback(
+            static fn (bool $onlyEnabled = false): array => $onlyEnabled ? [$site1, $site2] : [$site1, $site2, $disabledSite],
+        );
 
         $this->compiledDataManagerMock->method('createEntity')
             ->willReturnCallback(function(): CompiledData {
