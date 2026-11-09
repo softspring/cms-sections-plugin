@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
+use Rector\Symfony\CodeQuality\Rector\Class_\EventSubscriberToAttributeRector;
 use Rector\Symfony\Symfony61\Rector\Class_\CommandConfigureToAttributeRector;
 use Rector\Symfony\Symfony72\Rector\StmtsAwareInterface\PushRequestToRequestStackConstructorRector;
 use Rector\Symfony\Symfony73\Rector\Class_\GetFiltersAndFunctionsToAsTwigAttributeRector;
@@ -22,8 +23,10 @@ return RectorConfig::configure()
     ->withImportNames()
     ->withPhpVersion(PhpVersion::PHP_84)
     ->withComposerBased(symfony: true)
-    ->withSkip([
+    ->withSkip(array_filter([
+        // Preserve the public subscriber API; this rule is absent in the lowest Rector version.
+        class_exists(EventSubscriberToAttributeRector::class) ? EventSubscriberToAttributeRector::class : null,
         CommandConfigureToAttributeRector::class,
         GetFiltersAndFunctionsToAsTwigAttributeRector::class,
         PushRequestToRequestStackConstructorRector::class,
-    ]);
+    ]));

@@ -11,3 +11,9 @@
 ## Documentation
 
 [Armonic documentation](https://armonic.softspring.es/6.0/bundles/cms-bundle/sections)
+
+## Database migrations
+
+The plugin registers its own Doctrine migrations for section tables and relationships.
+`Version20261109100000` normalizes `cms_content_version_sections.content_version_id` after the CMS identifier normalization.
+It preserves the foreign key and supports both MySQL and PostgreSQL. Roll back this plugin migration before rolling back the earlier CMS migration.
