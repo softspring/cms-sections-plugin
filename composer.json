@@ -5,7 +5,7 @@
     "type": "sfs-cms-plugin",
     "require": {
         "php": ">=8.4",
-        "softspring/cms-bundle": "^6.0@dev"
+        "softspring/cms-bundle": "^6.0.0-rc2@dev"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.50",

@@ -2,6 +2,7 @@
 
 namespace Softspring\CmsSectionsPlugin\Test\Unit\Compiler;
 
+use DateTime;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -69,11 +70,38 @@ class SectionVersionCompilerTest extends TestCase
         });
     }
 
+    public function testRuntimeCompilationDoesNotAttachCacheOrModifyPublishedParent(): void
+    {
+        $version = new SectionVersion();
+        $parent = new Section();
+        $version->setParent($parent);
+        $parent->setPublishedVersion($version);
+        $parent->setLastModified(new DateTime('2000-01-01'));
+        $before = $parent->getLastModified();
+        $this->compileHelperMock->method('sectionSaveCompiled')->willReturn(true);
+        $this->sectionVersionRenderMock->method('render')->willReturn('Runtime HTML');
+        $compiled = $this->compiler->compileRequest($version, new Request(), false);
+        self::assertSame('Runtime HTML', $compiled->getDataPart('content'));
+        self::assertCount(0, $version->getCompiled());
+        self::assertEquals($before, $parent->getLastModified());
+    }
+
     public function testCompileRequestInvalidClassException(): void
     {
         $this->expectException(CompileException::class);
         $this->expectExceptionMessage('Version must be an instance of SectionVersionInterface');
         $this->compiler->compileRequest(new ContentVersion(), new Request());
+    }
+
+    public function testRuntimeErrorsAreReturnedWithoutChangingEditorialErrorState(): void
+    {
+        $version = new SectionVersion();
+        $this->compileHelperMock->method('sectionSaveCompiled')->willReturn(true);
+        $this->sectionVersionRenderMock->method('render')->willThrowException(new RenderException('Runtime template error'));
+        $compiled = $this->compiler->compileRequest($version, new Request(), false);
+        self::assertTrue($compiled->hasErrors());
+        self::assertFalse($version->hasCompileErrors());
+        self::assertCount(0, $version->getCompiled());
     }
 
     public function testCompileRequestRenderErrors(): void

@@ -57,7 +57,7 @@ class SectionVersionCompiler extends AbstractVersionCompiler
     /**
      * @throws CompileException
      */
-    public function compileRequest(VersionInterface $version, Request $request): CompiledDataInterface
+    public function compileRequest(VersionInterface $version, Request $request, bool $saveCompiled = true): CompiledDataInterface
     {
         if (!$version instanceof SectionVersionInterface) {
             throw new CompileException('Version must be an instance of SectionVersionInterface');
@@ -66,9 +66,10 @@ class SectionVersionCompiler extends AbstractVersionCompiler
         $compiledData = $this->compiledDataManager->createEntity();
         $compiledData->setKey($this->compiledDataManager->getCompileKeyFromRequest($version, $request));
         $compiledData->setVersion($version);
+        $compiledData->setGeneration($version->getCompiledGeneration());
 
         try {
-            if ($this->compileHelper->sectionSaveCompiled($version)) {
+            if ($saveCompiled && $this->compileHelper->sectionSaveCompiled($version)) {
                 $version->addCompiled($compiledData);
             }
 
@@ -92,6 +93,10 @@ class SectionVersionCompiler extends AbstractVersionCompiler
             $this->saveExceptionInCompiledData($compiledData, $exception);
         } catch (Exception $exception) {
             throw new CompileException('Error compiling section version request', 0, $exception);
+        }
+
+        if ($saveCompiled && $compiledData->hasErrors()) {
+            $version->setCompileErrors(true);
         }
 
         return $compiledData;
