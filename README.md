@@ -10,7 +10,7 @@
 
 ## Documentation
 
-[Armonic documentation](https://armonic.softspring.es/6.1@dev/bundles/cms-bundle/sections)
+[Armonic documentation](https://armonic.softspring.es/6.1-dev/bundles/cms-bundle/sections)
 
 ## Database migrations
 
