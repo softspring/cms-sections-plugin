@@ -27,6 +27,10 @@ class CompiledDataSectionRelationshipListener
 
         $sectionVersionMetadata = $eventArgs->getObjectManager()->getClassMetadata(SectionVersionInterface::class);
 
+        $table = $metadata->table;
+        $table['uniqueConstraints']['uniq_cms_section_compiled_key'] = ['columns' => ['section_version_id', 'compiled_key', 'generation']];
+        $metadata->setPrimaryTable($table);
+
         $metadata->mapManyToOne([
             'fieldName' => 'sectionVersion',
             'targetEntity' => $sectionVersionMetadata->getName(),

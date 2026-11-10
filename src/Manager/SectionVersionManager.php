@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Softspring\CmsBundle\Cache\CompiledContentCache;
+use Softspring\CmsBundle\Cache\DoctrineCompiledDataStore;
 use Softspring\CmsBundle\Compiler\CompileException;
 use Softspring\CmsBundle\Helper\CmsHelper;
 use Softspring\CmsBundle\Manager\CompiledDataManagerInterface;
@@ -28,7 +30,9 @@ class SectionVersionManager implements SectionVersionManagerInterface
         protected SectionVersionCompiler $sectionCompiler,
         protected CompiledDataManagerInterface $compiledDataManager,
         protected CompileHelper $compileHelper,
+        protected ?CompiledContentCache $compiledContentCache = null,
     ) {
+        $this->compiledContentCache ??= new CompiledContentCache(new DoctrineCompiledDataStore($em, $compiledDataManager));
     }
 
     public function getTargetClass(): string
@@ -67,22 +71,12 @@ class SectionVersionManager implements SectionVersionManagerInterface
     {
         $compiledKey = $this->compiledDataManager->getCompileKeyFromRequest($sectionVersion, $request);
 
-        /** @var ?CompiledDataInterface $compiledData */
-        $compiledData = $this->compiledDataManager->getRepository()->findOneBy([
-            'sectionVersion' => $sectionVersion,
-            'key' => $compiledKey,
-        ]);
-
-        if (!$compiledData?->getDataPart('content') || !$this->compileHelper->sectionSaveCompiled($sectionVersion)) {
-            $compiledData = $this->sectionCompiler->compileRequest($sectionVersion, $request);
-
-            if ($this->compileHelper->sectionSaveCompiled($sectionVersion)) {
-                $this->saveEntity($sectionVersion);
-            }
-
-            if ($throwExceptionOnCompileError && $compiledData->hasErrors()) {
-                throw new CompileException('Compilation error occurred');
-            }
+        $compile = fn (): CompiledDataInterface => $this->sectionCompiler->compileRequest($sectionVersion, $request, false);
+        $compiledData = 0 === $request->query->count() && $this->compileHelper->sectionSaveCompiled($sectionVersion)
+            ? $this->compiledContentCache->get($sectionVersion, $compiledKey, $compile)
+            : $compile();
+        if ($throwExceptionOnCompileError && $compiledData->hasErrors()) {
+            throw new CompileException('Compilation error occurred');
         }
 
         return $compiledData;
