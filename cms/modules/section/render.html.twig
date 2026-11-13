@@ -3,20 +3,21 @@
 {% set is_admin_preview = app.request.attributes.has('_cms_preview') and app.request.attributes.get('_cms_preview') %}
 
 {% if section %}
+    {% set section_site_id = app.request.attributes.get('_sfs_cms_site').id|default(app.request.attributes.get('_site')) %}
     {% if id|default(false) or class|default(false) %}<div {{ module.id(id) }} {{ module.class(class) }}>{% endif %}
         {% if mode == 'esi' %}
             {% if is_admin_preview %}
-                {% set controller_params = {'section':section.id, '_locale':app.request.locale, 'adminPreview': true, '_site': app.request.attributes.get('_site')} %}
+                {% set controller_params = {'section':section.id, '_locale':app.request.locale, 'adminPreview': true, '_site': section_site_id} %}
             {% else %}{# is render #}
-                {% set controller_params = {'section':section.id, '_locale':app.request.locale} %}
+                {% set controller_params = {'section':section.id, '_locale':app.request.locale, '_site': section_site_id} %}
             {% endif %}
             <esi:include onerror="continue" src="{{ fragment_uri(controller('Softspring\\CmsSectionsPlugin\\Controller\\SectionController::renderById', controller_params))|raw }}" />
         {% elseif mode == 'ajax' %}
             {% set section_div_id = 's'~random() %}
             {% if is_admin_preview %}
-                {% set section_url = url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, '_site': app.request.attributes.get('_site'), 'admin_preview': true}) %}
+                {% set section_url = url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, '_site': section_site_id, 'admin_preview': true}) %}
             {% else %}{# is render #}
-                {% set section_url = url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale}) %}
+                {% set section_url = url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, '_site': section_site_id}) %}
             {% endif %}
             <div data-sfs-cms-ajax="section" data-sfs-cms-section-id="{{ section.id }}" id="{{ section_div_id }}" data-href="{{ section_url }}">
                 <script type="text/javascript">
@@ -39,9 +40,9 @@
             </div>
         {% else %}
             {% if is_admin_preview %}
-                {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true, '_site': app.request.attributes.get('_site'), 'admin_preview': true})) }}
+                {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true, '_site': section_site_id, 'admin_preview': true})) }}
             {% else %}{# is render #}
-                {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true})) }}
+                {{ render(url('sfs_cms_section_render', {'section': section.id, '_locale':app.request.locale, 'do_not_throw_not_found': true, '_site': section_site_id})) }}
             {% endif %}
         {% endif %}
     {% if id|default(false) or class|default(false) %}</div>{% endif %}
