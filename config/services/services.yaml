@@ -14,7 +14,7 @@ services:
 #            $profiler: '@?profiler'
 #            $entityTransformers: !tagged_iterator { tag: sfs_cms.data.entity_transformer, default_priority_method: getPriority }
 #            $fieldTransformers: !tagged_iterator { tag: sfs_cms.data.field_transformer, default_priority_method: getPriority }
-#            $cmsLogger: '@?monolog.logger.cms'
+            $cmsLogger: '@?monolog.logger.cms'
 #            $debug: '%kernel.debug%'
 #            $defaultRestrictPatterns: '%sfs_cms.form_type.symfony_route.default_restrict_patterns%'
 #            $contentSaveCompiled: '%sfs_cms.content.save_compiled%'
