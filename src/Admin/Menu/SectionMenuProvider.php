@@ -3,7 +3,9 @@
 namespace Softspring\CmsSectionsPlugin\Admin\Menu;
 
 use Softspring\CmsSectionsPlugin\Model\SectionInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 255)]
 class SectionMenuProvider extends AbstractSectionMenuProvider
 {
     public static function getPriority(): int
